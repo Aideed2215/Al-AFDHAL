@@ -1,0 +1,7 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "afdal-clinic",
+  "account_id": "969d4bec4f3b83ef86b8935401302ca3",
+  "pages_build_output_dir": "./out",
+  "compatibility_date": "2026-07-05"
+}
