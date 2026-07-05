@@ -128,7 +128,7 @@ export default function TestimonialsCarousel() {
           className="mt-12"
         >
           <div
-            className="relative flex items-center justify-center gap-2 sm:gap-4"
+            className="relative flex items-center justify-center gap-1 sm:gap-4"
             style={{ perspective: 1200 }}
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
@@ -136,7 +136,7 @@ export default function TestimonialsCarousel() {
             <button
               onClick={prev}
               aria-label="السابق"
-              className="z-40 flex size-11 shrink-0 items-center justify-center rounded-full border border-primary/15 bg-white/90 text-xl text-primary shadow-sm backdrop-blur transition-all hover:bg-primary hover:text-white hover:shadow-lg hover:shadow-primary/20"
+              className="z-40 flex size-9 sm:size-11 shrink-0 items-center justify-center rounded-full border border-primary/15 bg-white/90 text-lg sm:text-xl text-primary shadow-sm backdrop-blur transition-all hover:bg-primary hover:text-white hover:shadow-lg hover:shadow-primary/20"
             >
               ‹
             </button>
@@ -144,7 +144,7 @@ export default function TestimonialsCarousel() {
             <div
               ref={stageRef}
               className="relative flex w-full items-center justify-center overflow-hidden"
-              style={{ height: 360 }}
+              style={{ height: 340 }}
             >
               {testimonials.map((t, i) => {
                 let diff = i - current;
@@ -174,7 +174,7 @@ export default function TestimonialsCarousel() {
                   <div
                     key={t.name}
                     onClick={() => goTo(i)}
-                    className="absolute w-80 cursor-pointer select-none rounded-2xl border border-primary/10 bg-white/80 p-7 shadow-lg shadow-black/5 backdrop-blur-xl transition-all duration-500 will-change-transform"
+                    className="absolute w-[260px] sm:w-80 cursor-pointer select-none rounded-2xl border border-primary/10 bg-white/80 p-5 sm:p-7 shadow-lg shadow-black/5 backdrop-blur-xl transition-all duration-500 will-change-transform"
                     style={{
                       transform,
                       zIndex,
@@ -223,7 +223,7 @@ export default function TestimonialsCarousel() {
             <button
               onClick={next}
               aria-label="التالي"
-              className="z-40 flex size-11 shrink-0 items-center justify-center rounded-full border border-primary/15 bg-white/90 text-xl text-primary shadow-sm backdrop-blur transition-all hover:bg-primary hover:text-white hover:shadow-lg hover:shadow-primary/20"
+              className="z-40 flex size-9 sm:size-11 shrink-0 items-center justify-center rounded-full border border-primary/15 bg-white/90 text-lg sm:text-xl text-primary shadow-sm backdrop-blur transition-all hover:bg-primary hover:text-white hover:shadow-lg hover:shadow-primary/20"
             >
               ›
             </button>
