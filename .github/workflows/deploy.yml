@@ -18,6 +18,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - run: npx wrangler@4.107.0 pages deploy out --project-name afdal-clinic --branch master
+      - run: npx wrangler@4.107.0 pages deploy out --project-name afdal-clinic --branch master --commit-dirty=true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: 969d4bec4f3b83ef86b8935401302ca3
