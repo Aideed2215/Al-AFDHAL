@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Card Carousel — عيادات أفضل كلينك</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #faf9f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 1100px; width: 100%; }
+
+    /* Header */
+    .header { text-align: center; margin-bottom: 3rem; }
+    .header .label {
+      display: inline-block;
+      font-size: 0.9rem; font-weight: 700;
+      color: #9E633F;
+      background: rgba(158,99,63,0.08);
+      padding: 0.4rem 1.25rem;
+      border-radius: 999px;
+    }
+    .header h2 {
+      font-size: 2rem; font-weight: 800;
+      color: #1a1a18; margin-top: 0.75rem;
+    }
+    .header p {
+      color: #5c5a57; font-size: 1rem; margin-top: 0.5rem;
+    }
+
+    /* Carousel */
+    .carousel-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      perspective: 1200px;
+    }
+
+    /* Cards stage — centered layout with overlap */
+    .stage {
+      position: relative;
+      width: 100%;
+      height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .card {
+      position: absolute;
+      width: 320px;
+      padding: 1.75rem;
+      border-radius: 1rem;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(158,99,63,0.10);
+      overflow: hidden;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  opacity 0.5s ease,
+                  box-shadow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      will-change: transform;
+      cursor: pointer;
+      box-shadow:
+        0 4px 6px -1px rgba(0,0,0,0.04),
+        0 10px 24px -6px rgba(0,0,0,0.06);
+      user-select: none;
+    }
+
+    /* Blur circle decoration */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(158,99,63,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Glow line on active card */
+    .card.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(158,99,63,0.4), rgba(26,107,90,0.4), transparent);
+    }
+
+    .card .quote-mark {
+      position: absolute;
+      top: 0.4rem; left: 1rem;
+      font-size: 5rem; line-height: 1;
+      color: rgba(158,99,63,0.06);
+      font-family: serif;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .stars {
+      display: flex; gap: 2px; margin-bottom: 0.75rem;
+      position: relative; z-index: 1;
+    }
+    .star { width: 16px; height: 16px; }
+    .star-fill { fill: rgba(158,99,63,0.7); color: rgba(158,99,63,0.7); }
+    .star-empty { fill: none; color: #e2e0dc; }
+
+    .comment {
+      font-size: 0.875rem; line-height: 1.75;
+      color: #5c5a57; position: relative; z-index: 1;
+      display: -webkit-box; -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .name {
+      margin-top: 1rem; font-size: 0.875rem;
+      font-weight: 700; color: #1a1a18;
+      position: relative; z-index: 1;
+    }
+
+    /* Buttons */
+    .btn {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1px solid rgba(158,99,63,0.15);
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px);
+      color: #9E633F;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .btn:hover {
+      background: #9E633F;
+      color: #fff;
+      border-color: #9E633F;
+      box-shadow: 0 4px 16px rgba(158,99,63,0.25);
+    }
+
+    /* Dots */
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #d4cfc9;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+    .dot.active {
+      background: #9E633F;
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .google-link {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .google-link a {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.875rem; font-weight: 700;
+      color: #9E633F; text-decoration: none;
+    }
+    .google-link a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <span class="label">بطاقات زجاجية ثلاثية الأبعاد</span>
+      <h2>ماذا يقول مرضانا عنا</h2>
+      <p>نفخر بثقة مرضانا التي هي سر نجاحنا</p>
+    </div>
+
+    <div class="carousel-wrap">
+      <button class="btn" id="prevBtn" aria-label="السابق">‹</button>
+
+      <div class="stage" id="stage">
+        <!-- Cards rendered by JS -->
+      </div>
+
+      <button class="btn" id="nextBtn" aria-label="التالي">›</button>
+    </div>
+
+    <div class="dots" id="dots"></div>
+
+    <div class="google-link">
+      <a href="#" target="_blank">عرض جميع التقييمات على Google →</a>
+    </div>
+  </div>
+
+  <script>
+    const testimonials = [
+      { name: "سارة", rating: 5, comment: "تجربة رائعة! الفريق محترف جداً والمكان نظيف ومريح. أنصح الجميع بتجربة خدماتهم." },
+      { name: "محمد", rating: 5, comment: "أفضل عيادة دخلتها من ناحية النظافة والشغل والاستقبال. نتيجة الليزر ممتازة." },
+      { name: "نورة", rating: 4, comment: "خدمة ممتازة وفريق عمل متقن. العيادة راقية والأجهزة حديثة. سعيدة بالتجربة." },
+      { name: "عبدالله", rating: 5, comment: "شغل احترافي وتعامل راقي. الفيلر طبيعي جداً والنتيجة أحسن من المتوقع." },
+      { name: "هدى", rating: 4, comment: "العناية بالبشرة عندهم ممتازة. استخدمت نضارة البشرة والنتيجة مذهلة." },
+      { name: "مشاعل", rating: 5, comment: "سويت تنظيف بشره عند أفضل عيادة في الرياض، التنظيف كان عميق وأكيد أنصح بتجربته. ينظفون البشره من قلب وبعدها يحطون ماسك بارد. وشكراً لأستاذه هبه على حسن الاستقبال." },
+      { name: "خلود", rating: 5, comment: "الدكتوره ريم الغنام شاطره، ثاني مره أجيها يدها خفيفه. الفيلر والبوتكس ترسم الوجه رسم وتحققن في الأماكن الي تحتاج وتعطيك الصراحه. سلمت يدها ع الشغل الجميل." },
+      { name: "Monia", rating: 5, comment: "تجربتي الأولى مع العيادة كانت سهلة وسريعة. عرفت العيادة من خلال بحثي عن الدكتورة حنان البحيري. وما ندمت أبدًا إني جيتها؛ إنسانة صادقة وأمينة، وتعطيك وقتك بكل أريحية. تعاملها مريح وعلمها عالي جداً." },
+      { name: "شوق", rating: 5, comment: "تجربتي كانت تشقير حواجب ممتاز وسريعين جداً وأسعارهم مناسبه مع العروض. أشكر الأستاذه وضحى على توضيحها لجميع الخدمات والعروض المتوفره وحسن الاستقبال." },
+    ];
+
+    const stage = document.getElementById('stage');
+    const dotsEl = document.getElementById('dots');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let current = 0;
+    let autoTimer = null;
+
+    function starSVG(filled) {
+      return `<svg class="star ${filled ? 'star-fill' : 'star-empty'}" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+    }
+
+    function renderCard(t) {
+      let stars = '';
+      for (let i = 0; i < 5; i++) stars += starSVG(i < t.rating);
+      return `
+        <span class="quote-mark">"</span>
+        <div class="stars">${stars}</div>
+        <p class="comment">&quot;${t.comment}&quot;</p>
+        <p class="name">${t.name}</p>
+      `;
+    }
+
+    // Create all card elements
+    const cards = testimonials.map((t, i) => {
+      const div = document.createElement('div');
+      div.className = 'card';
+      div.dataset.index = i;
+      div.innerHTML = renderCard(t);
+      div.addEventListener('click', () => goTo(i));
+      stage.appendChild(div);
+      return div;
+    });
+
+    // Dots
+    testimonials.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot';
+      dot.addEventListener('click', () => goTo(i));
+      dotsEl.appendChild(dot);
+    });
+    const dots = dotsEl.querySelectorAll('.dot');
+
+    function goTo(index) {
+      current = index;
+      update();
+      resetAuto();
+    }
+
+    function next() { goTo((current + 1) % testimonials.length); }
+    function prev() { goTo((current - 1 + testimonials.length) % testimonials.length); }
+
+    const CARD_W = 320;
+    const CARD_H = CARD_W / 2;
+
+    const levels = [
+      // level 0 (center)  →  fully visible, pops forward
+      { max: 0, xR: 0,    z: 60,  rot: 0,  s: 1.00, zi: 10, op: 1,    pe: 'auto', cls: 'card active' },
+      // level 1  →  peeks from behind center right edge
+      { max: 1, xR: 0.5,  z: -5,  rot: 12, s: 0.70, zi: 7,  op: 0.88, pe: 'auto', cls: 'card' },
+      // level 2  →  further right
+      { max: 2, xR: 0.75, z: -35, rot: 24, s: 0.49, zi: 4,  op: 0.65, pe: 'none', cls: 'card' },
+      // level 3  →  near edge
+      { max: 3, xR: 0.9,  z: -70, rot: 36, s: 0.34, zi: 2,  op: 0.35, pe: 'none', cls: 'card' },
+      // level 4  →  half visible at edge
+      { max: 4, xR: 1,    z: -110,rot: 48, s: 0.24, zi: 1,  op: 0.15, pe: 'none', cls: 'card' },
+    ];
+
+    function update() {
+      const len = testimonials.length;
+      const stageW = stage.clientWidth || 800;
+      // max offset = stage center → level4 card center at stage edge = 50% visible
+      const maxOff = Math.max(stageW / 2, CARD_H);
+
+      cards.forEach((el, i) => {
+        let diff = i - current;
+        if (diff > len / 2) diff -= len;
+        if (diff < -len / 2) diff += len;
+
+        const abs = Math.abs(diff);
+        const found = levels.find(l => abs <= l.max);
+
+        if (found) {
+          const sign = diff < 0 ? -1 : 1;
+          const xPx = found.xR * maxOff;
+          el.className = found.cls;
+          el.style.transform = `translateX(${sign * xPx}px) translateZ(${found.z}px) rotateY(${sign * found.rot}deg) scale(${found.s})`;
+          el.style.zIndex = found.zi;
+          el.style.opacity = found.op;
+          el.style.pointerEvents = found.pe;
+        } else {
+          const xPx = 1.2 * maxOff;
+          el.className = 'card';
+          el.style.transform = `translateX(${diff < 0 ? -xPx : xPx}px) translateZ(-150px) scale(0.2)`;
+          el.style.zIndex = 0;
+          el.style.opacity = 0;
+          el.style.pointerEvents = 'none';
+        }
+      });
+
+      dots.forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+    }
+
+    window.addEventListener('resize', update);
+
+    function resetAuto() {
+      if (autoTimer) clearInterval(autoTimer);
+      autoTimer = setInterval(next, 4000);
+    }
+
+    // Pause on hover
+    const wrap = document.querySelector('.carousel-wrap');
+    wrap.addEventListener('mouseenter', () => {
+      if (autoTimer) clearInterval(autoTimer);
+      autoTimer = null;
+    });
+    wrap.addEventListener('mouseleave', resetAuto);
+
+    // Buttons
+    prevBtn.addEventListener('click', prev);
+    nextBtn.addEventListener('click', next);
+
+    // Init
+    update();
+    resetAuto();
+  </script>
+</body>
+</html>
