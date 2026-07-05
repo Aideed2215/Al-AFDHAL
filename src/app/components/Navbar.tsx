@@ -90,7 +90,7 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => { document.body.style.overflow = ""; setMobileOpen(false); }}
                   className="py-3 px-4 rounded-lg text-text-secondary hover:text-primary hover:bg-glow transition-all"
                 >
                   {link.label}
