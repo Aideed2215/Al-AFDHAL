@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+export const dynamic = "force-static";
 import { services } from "@/data/services";
 
 const baseUrl = "https://afdalclinic.com";
