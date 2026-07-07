@@ -1,21 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "الخدمات", href: "#services" },
-  { label: "الأطباء", href: "#doctors" },
-  { label: "الأسئلة الشائعة", href: "#faq" },
-  { label: "آراء المرضى", href: "#testimonials" },
-  { label: "معرض الصور", href: "#gallery" },
-  { label: "الموقع", href: "#location" },
+  { label: "الخدمات", href: "/#services" },
+  { label: "الأطباء", href: "/#doctors" },
+  { label: "الأسئلة الشائعة", href: "/#faq" },
+  { label: "آراء المرضى", href: "/#testimonials" },
+  { label: "معرض الصور", href: "/#gallery" },
+  { label: "الموقع", href: "/#location" },
 ];
 
 const waUrl = "https://wa.me/966581151740?text=مرحباً، أرغب بحجز موعد في عيادة أفضل كلينك";
 
 export default function Navbar() {
+  const headerRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -64,8 +65,20 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setMobileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [mobileOpen]);
+
   return (
     <motion.header
+      ref={headerRef}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
@@ -84,7 +97,7 @@ export default function Navbar() {
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        <a href="#" className="flex items-center gap-3">
+        <a href="/" className="flex items-center gap-3">
           <span className="text-xl font-bold text-primary font-heading">
             أفضل كلينك
           </span>
@@ -92,7 +105,7 @@ export default function Navbar() {
 
         <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => {
-            const isActive = link.href.slice(1) === activeSection;
+            const isActive = link.href.replace("/#", "") === activeSection;
             return (
               <a
                 key={link.href}
@@ -146,7 +159,7 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={(e) => { e.preventDefault(); document.body.style.overflow = ""; setMobileOpen(false); const id = link.href.slice(1); history.replaceState(null, "", `#${id}`); setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }), 100); }}
+                  onClick={(e) => { e.preventDefault(); document.body.style.overflow = ""; setMobileOpen(false); const id = link.href.replace("/#", ""); history.replaceState(null, "", `/#${id}`); setTimeout(() => { window.location.href = `/#${id}`; }, 100); }}
                   className="py-3 px-4 rounded-lg text-text-secondary hover:text-primary hover:bg-glow transition-all"
                 >
                   {link.label}

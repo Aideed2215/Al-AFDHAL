@@ -178,7 +178,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </p>
           <div className="mt-6 flex items-center justify-center gap-4">
             <a
-              href="https://wa.me/966581151740"
+              href={`https://wa.me/966581151740?text=${encodeURIComponent(`مرحباً، أرغب بالاستفسار عن خدمة ${service.title} في عيادة أفضل كلينك`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-xl bg-primary px-8 py-3 text-sm font-bold text-white shadow-lg shadow-primary/20 transition-all hover:bg-primary-hover"
