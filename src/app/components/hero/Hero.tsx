@@ -8,7 +8,6 @@ import HeroContent from "./HeroContent";
 const slides = [
   { src: "/images/gallery/1.jpg", alt: "واجهة عيادات أفضل كلينك" },
   { src: "/images/gallery/0.jpg", alt: "داخلية عيادات أفضل كلينك" },
-  { src: "/images/gallery/1000_F_455052236_Bp3JwsxNSv5aOOuWjeXBvpWAeTsTTPZV.jpg", alt: "فريق عيادات أفضل كلينك الطبي" },
 ];
 
 export default function Hero() {
