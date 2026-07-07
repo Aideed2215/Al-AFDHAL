@@ -1,27 +1,60 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import HeroImage from "./HeroImage";
+import { useState, useEffect } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import HeroContent from "./HeroContent";
 
+const slides = [
+  { src: "/images/gallery/1.jpg", alt: "واجهة عيادات أفضل كلينك" },
+  { src: "/images/gallery/0.jpg", alt: "داخلية عيادات أفضل كلينك" },
+  { src: "/images/gallery/1000_F_455052236_Bp3JwsxNSv5aOOuWjeXBvpWAeTsTTPZV.jpg", alt: "فريق عيادات أفضل كلينك الطبي" },
+];
+
 export default function Hero() {
+  const [current, setCurrent] = useState(0);
   const { scrollYProgress } = useScroll();
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((c) => (c + 1) % slides.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-background">
-      <motion.div
-        style={{ y: bgY }}
-        className="absolute inset-0 bg-gradient-to-br from-background via-surface to-glow/50"
-      />
+      <motion.div style={{ y: bgY }} className="absolute inset-0">
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={current}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={slides[current].src}
+              alt={slides[current].alt}
+              fill
+              className="object-cover"
+              sizes="100vw"
+              priority
+            />
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+
+      <div className="absolute inset-0 bg-gradient-to-l from-black/70 via-black/40 to-black/70" />
 
       <motion.div
         style={{ y: bgY }}
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.06]"
       >
         <div
-          className="h-full w-full bg-[radial-gradient(ellipse_70%_60%_at_70%_50%,#9E633F_0%,transparent_60%),radial-gradient(ellipse_50%_40%_at_30%_30%,#1A6B5A_0%,transparent_50%)]"
+          className="h-full w-full bg-[radial-gradient(ellipse_70%_60%_at_70%_50%,#fff_0%,transparent_60%),radial-gradient(ellipse_50%_40%_at_30%_30%,#1A6B5A_0%,transparent_50%)]"
           style={{
             backgroundSize: "200% 200%",
             animation: "ambientShift 12s ease-in-out infinite",
@@ -29,15 +62,24 @@ export default function Hero() {
         />
       </motion.div>
 
-      <motion.div
-        style={{ y: contentY }}
-        className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-16 sm:pt-32 sm:pb-24 w-full"
-      >
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <HeroContent />
-          <HeroImage />
-        </div>
-      </motion.div>
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-16 sm:pt-32 sm:pb-24 w-full">
+        <HeroContent />
+      </div>
+
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-3">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`h-2 rounded-full transition-all duration-500 ${
+              i === current
+                ? "w-8 bg-white"
+                : "w-2 bg-white/40 hover:bg-white/60"
+            }`}
+            aria-label={`الانتقال إلى الشريحة ${i + 1}`}
+          />
+        ))}
+      </div>
     </section>
   );
 }

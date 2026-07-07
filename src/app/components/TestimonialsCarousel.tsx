@@ -184,8 +184,6 @@ export default function TestimonialsCarousel() {
                         "cubic-bezier(0.34, 1.56, 0.64, 1)",
                     }}
                   >
-                    <div className="pointer-events-none absolute -top-10 -right-10 size-35 rounded-full bg-primary/10 blur-3xl" />
-
                     <span className="pointer-events-none absolute top-1 left-4 select-none font-serif text-6xl leading-none text-primary/5">
                       &quot;
                     </span>

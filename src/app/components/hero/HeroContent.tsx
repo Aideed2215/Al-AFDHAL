@@ -41,20 +41,20 @@ export default function HeroContent() {
         variants={fadeUp}
         className="mt-6 font-heading leading-[0.95]"
       >
-        <span className="text-[clamp(2.5rem,10vw,6.5rem)] font-light block tracking-tight text-text-primary">
+        <span className="text-[clamp(2.5rem,10vw,6.5rem)] font-light block tracking-tight text-white">
           بشرتك
         </span>
-        <span className="text-[clamp(3rem,11vw,7rem)] font-bold block text-primary">
+        <span className="text-[clamp(3rem,11vw,7rem)] font-bold block text-white">
           تستحق
         </span>
-        <span className="text-[clamp(2.5rem,10vw,6.5rem)] font-light block tracking-tight text-text-primary mt-1">
+        <span className="text-[clamp(2.5rem,10vw,6.5rem)] font-light block tracking-tight text-white mt-1">
           الأفضل
         </span>
       </motion.h1>
 
       <motion.p
         variants={fadeUp}
-        className="mt-6 text-base sm:text-lg text-text-secondary leading-relaxed max-w-[560px] text-center"
+        className="mt-6 text-base sm:text-lg text-white/70 leading-relaxed max-w-[560px] text-center"
       >
         عيادات أفضل كلينك تجمع بين أحدث تقنيات الجلدية والتجميل وأمهر الأطباء
         لتقديم تجربة علاجية استثنائية بمعايير عالمية.

@@ -85,12 +85,16 @@ export default function Navbar() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-white/90 backdrop-blur-lg shadow-sm"
-          : "bg-transparent"
+          : "bg-black/25 backdrop-blur-sm"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <button
-          className="lg:hidden p-2.5 rounded-lg hover:bg-glow transition-colors"
+          className={`lg:hidden p-2.5 rounded-lg transition-colors ${
+            scrolled
+              ? "hover:bg-glow text-text-primary"
+              : "hover:bg-white/10 text-white"
+          }`}
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? "إغلاق القائمة" : "فتح القائمة"}
         >
@@ -98,7 +102,7 @@ export default function Navbar() {
         </button>
 
         <a href="/" className="flex items-center gap-3">
-          <span className="text-xl font-bold text-primary font-heading">
+          <span className={`text-xl font-bold font-heading ${scrolled ? "text-primary" : "text-white"}`}>
             أفضل كلينك
           </span>
         </a>
@@ -110,15 +114,19 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-primary/5 hover:shadow-sm ${
+                className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                   isActive
-                    ? "text-primary bg-primary/5"
-                    : "text-text-secondary hover:text-primary"
+                    ? scrolled
+                      ? "text-primary bg-primary/5"
+                      : "text-white bg-white/10"
+                    : scrolled
+                      ? "text-text-secondary hover:text-primary hover:bg-primary/5 hover:shadow-sm"
+                      : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
               >
                 {link.label}
                 {isActive && (
-                  <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary" />
+                  <span className={`absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full ${scrolled ? "bg-primary" : "bg-white"}`} />
                 )}
               </a>
             );
@@ -137,7 +145,11 @@ export default function Navbar() {
                 transition={{ duration: 0.3, ease: "easeIn" }}
                 whileHover={{ scale: 1.04, transition: { type: "spring", stiffness: 400, damping: 20 } }}
                 whileTap={{ scale: 0.96, transition: { type: "spring", stiffness: 400, damping: 20 } }}
-                className="inline-flex h-11 items-center justify-center rounded-xl bg-primary px-5 text-sm font-bold text-white shadow-sm transition-colors duration-200 hover:bg-primary-hover hover:shadow-lg"
+                className={`inline-flex h-11 items-center justify-center rounded-xl px-5 text-sm font-bold shadow-sm transition-colors duration-200 hover:shadow-lg ${
+                  scrolled
+                    ? "bg-primary text-white hover:bg-primary-hover"
+                    : "bg-white text-primary hover:bg-white/90"
+                }`}
               >
                 احجز موعدك
               </motion.a>

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion";
 import { ArrowLeft, Star, Award, Users, Check } from "lucide-react";
 import { doctors } from "@/data/doctors";
 import SectionHeading from "./SectionHeading";
@@ -28,16 +28,19 @@ const sceneItem = {
 
 export default function DoctorSpotlight() {
   const [active, setActive] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const inView = useInView(sectionRef, { once: true, margin: "-80px" });
   const doctor = doctors[active];
   const { scrollYProgress } = useScroll();
   const imageParallax = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
   return (
-    <section id="doctors" className="relative py-20 sm:py-28 overflow-hidden">
+    <section ref={sectionRef} id="doctors" className="relative py-20 sm:py-28 overflow-hidden">
       <motion.div
         key={doctor.id}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.7 }}
         className={`absolute inset-0 bg-gradient-to-br ${doctor.gradient} transition-colors duration-700`}
       />
@@ -52,8 +55,11 @@ export default function DoctorSpotlight() {
           />
         </ScrollReveal>
 
+        {inView && (
+        <>
         <div className="mt-12 lg:mt-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="text-center lg:text-right">
+            <div className="rounded-3xl bg-white/60 backdrop-blur-lg border border-white/40 shadow-xl shadow-black/5 p-6 sm:p-8 lg:p-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={doctor.id}
@@ -139,6 +145,7 @@ export default function DoctorSpotlight() {
                 </motion.div>
               </motion.div>
             </AnimatePresence>
+            </div>
           </div>
 
           <AnimatePresence mode="wait">
@@ -205,6 +212,8 @@ export default function DoctorSpotlight() {
             </button>
           ))}
         </div>
+      </>
+      )}
       </div>
     </section>
   );
