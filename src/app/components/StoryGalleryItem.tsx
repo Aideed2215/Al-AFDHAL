@@ -56,15 +56,7 @@ export default function StoryGalleryItem({ item, index, onSelect }: Props) {
             <p className="mt-4 sm:mt-6 text-base sm:text-lg text-text-secondary leading-relaxed max-w-lg mx-auto lg:mx-0 lg:ml-auto">
               {item.description}
             </p>
-            <button
-              onClick={() => onSelect(item.id)}
-              className="mt-6 inline-flex items-center gap-2 text-primary font-medium text-sm hover:text-primary-hover transition-colors"
-            >
-              عرض الصورة
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </button>
+
           </div>
         </div>
       </div>
