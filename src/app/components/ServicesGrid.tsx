@@ -71,7 +71,7 @@ export default function ServicesGrid() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-50px" }}
-          className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
           {services.map((service, i) => {
             const Icon = service.icon;
@@ -79,7 +79,7 @@ export default function ServicesGrid() {
               <motion.div key={i} variants={item}>
                 <Link
                   href={`/services/${service.slug}`}
-                  className="group block rounded-2xl border border-border/60 bg-white p-6 transition-all duration-200 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-primary/5 hover:border-primary/20"
+                  className="group flex flex-col h-full rounded-2xl border border-border/60 bg-white p-6 transition-all duration-200 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-primary/5 hover:border-primary/20"
                 >
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all duration-200 group-hover:bg-primary group-hover:text-white">
                     <Icon size={24} />
@@ -87,7 +87,7 @@ export default function ServicesGrid() {
                   <h3 className="text-lg font-bold font-heading text-text-primary">
                     {service.title}
                   </h3>
-                  <p className="mt-2 text-sm text-text-secondary/80 leading-relaxed">
+                  <p className="mt-2 grow text-sm text-text-secondary/80 leading-relaxed">
                     {service.description}
                   </p>
                 </Link>
