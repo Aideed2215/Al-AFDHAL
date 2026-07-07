@@ -6,9 +6,9 @@ import Image from "next/image";
 import HeroContent from "./HeroContent";
 
 const slides = [
-  { src: "/images/gallery/1.jpg", alt: "واجهة عيادات أفضل كلينك" },
-  { src: "/images/gallery/0.jpg", alt: "داخلية عيادات أفضل كلينك" },
-  { src: "/images/gallery/3.jpg", alt: "فريق عيادات أفضل كلينك الطبي" },
+  { src: "/images/gallery/hero-1.jpg", alt: "جلسة عناية بالبشرة في أفضل كلينك" },
+  { src: "/images/gallery/hero-2.jpg", alt: "طبيبة تطمئن على مريضة في أفضل كلينك" },
+  { src: "/images/gallery/hero-3.jpg", alt: "حقنة تجميلية في أفضل كلينك" },
 ];
 
 export default function Hero() {
