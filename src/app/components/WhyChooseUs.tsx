@@ -33,7 +33,7 @@ const steps = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-20 sm:py-28 bg-glow/40">
+    <section id="process" className="py-20 sm:py-28 bg-glow/40">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           label="رحلتك معنا"

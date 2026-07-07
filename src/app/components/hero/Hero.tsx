@@ -79,7 +79,7 @@ export default function Hero() {
             aria-label={`الانتقال إلى الشريحة ${i + 1}`}
           />
         ))}
-      </div>
+        </div>
     </section>
   );
 }
