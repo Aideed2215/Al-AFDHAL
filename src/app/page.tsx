@@ -9,7 +9,6 @@ import TestimonialsCarousel from "@/app/components/TestimonialsCarousel";
 import StoryGallery from "@/app/components/StoryGallery";
 import FinalCTA from "@/app/components/FinalCTA";
 import LocationContact from "@/app/components/LocationContact";
-import FloatingCTA from "@/app/components/FloatingCTA";
 import ScrollDownIndicator from "@/app/components/ScrollDownIndicator";
 import Footer from "@/app/components/Footer";
 
@@ -27,7 +26,6 @@ export default function Home() {
       <StoryGallery />
       <FinalCTA />
       <LocationContact />
-      <FloatingCTA />
       <ScrollDownIndicator />
       <Footer />
     </main>

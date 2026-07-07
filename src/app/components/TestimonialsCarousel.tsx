@@ -7,58 +7,60 @@ import SectionHeading from "./SectionHeading";
 
 const testimonials = [
   {
-    name: "سارة",
+    name: "BSTAN Al-Enazi",
     rating: 5,
     comment:
-      "تجربة رائعة! الفريق محترف جداً والمكان نظيف ومريح. أنصح الجميع بتجربة خدماتهم.",
+      "تجربة جميلة جدًا مع الدكتورة نانسي سامر، وأشكرها على احترافيتها واهتمامها بالتفاصيل. ما قصّرت أبدًا، شغلها متقن وضميرها حاضر في كل خطوة. من الأشياء اللي تميزها أن يدها خفيفة وتعاملها راقٍ، وما تتركك إلا وهي متأكدة أنك راضٍ عن النتيجة. طلعت من العيادة وأنا سعيد جدًا بالنتيجة، وكانت أفضل مما توقعت. أنصح فيها بكل ثقة، وأسأل الله لها التوفيق.",
+    reviewUrl: "https://maps.app.goo.gl/mEPGyQsXqcGToYct9",
   },
   {
-    name: "محمد",
+    name: "Ghaida Altwaily",
     rating: 5,
     comment:
-      "أفضل عيادة دخلتها من ناحية النظافة والشغل والاستقبال. نتيجة الليزر ممتازة.",
+      "حبيت العياده مرتبه ونظيفه والموظفات بشوشات وتجربتي مع الاخصائيه نوره تنطيف هيدرافيشل كان جميلل وراضيه عنه الله يسعدها وحبيت توزيعاتهم للميني سايز غسول وغيره وحبيت فكره اذا سويتي الاجراء ٣ مرات الرابعه مجانا 😍!!",
+    reviewUrl: "https://maps.app.goo.gl/ZybFHE6MmKCZNmgA8",
   },
   {
-    name: "نورة",
+    name: "Salma Aljwaei",
+    rating: 5,
+    comment:
+      "حرفيا افضل عياده بالرياض، احب اشكر الاستقبال العسولات رزان و ساره على اهتمامهم بالعميل و صبرهم، انا كان عندي مشكله A very very sensitive skin و ماكان اي جهاز يناسبني جربت عندهم جهازين ليزر وكانت من اجمل الجلسات الي سويتها بحياتي",
+    reviewUrl: "https://maps.app.goo.gl/GtctwdemQUPXganZ6",
+  },
+  {
+    name: "Najd Naif",
+    rating: 5,
+    comment:
+      "طبعا العياده روعه وعلى رأسهم الدكتوره ريم أنا اعرفها من زمان وعمري ماسلمت وجهي إلا لها هي امينه جدا ونصوحه ويدها خفيفه الله يحفظها ماتقصر اجمل دكتوره بالرياض والمملكه كلها ❤️❤️❤️❤️❤️",
+    reviewUrl: "https://maps.app.goo.gl/RgHCh47NRFbTciWA7",
+  },
+  {
+    name: "M ال ناصر",
+    rating: 5,
+    comment:
+      "سويت تنظيف بشره عند افضل عياده في الرياض التنظيف كان عميق و اكيد انصح بتجربته 😍 ينظفون البشره من قلب وبعدها يحطون ماسك بارد 🫧 وطبعا اشكر أستاذه هبه على حسن الاستقبال",
+    reviewUrl: "https://maps.app.goo.gl/NPkvWZ3AvuuKU4Fc8",
+  },
+  {
+    name: "layla alghamdi",
+    rating: 5,
+    comment:
+      "Maraida did my laser session she is amazing and takes her time to ensure everything was done properly",
+    reviewUrl: "https://maps.app.goo.gl/6e8doh3zdv4My7gB7",
+  },
+  {
+    name: "Amal Ibrahim",
+    rating: 5,
+    comment:
+      "عياده جميله ومرتبه اشكر الطاقم الطبي واللي عند الاستقبال خدمتهم جميله جدا شكرا خاص للمنسقة ريم انسانه خدومه و رائعه بالتعامل وفي المواعيد الله يسعدها ولو ودي اقيمها تستاهل اكثر من 5 وان شاء الله لي زيارات للعيادة ❤️",
+    reviewUrl: "https://maps.app.goo.gl/114ufTr2uJhLRABN6",
+  },
+  {
+    name: "Sultanh Muteb",
     rating: 4,
     comment:
-      "خدمة ممتازة وفريق عمل متقن. العيادة راقية والأجهزة حديثة. سعيدة بالتجربة.",
-  },
-  {
-    name: "عبدالله",
-    rating: 5,
-    comment:
-      "شغل احترافي وتعامل راقي. الفيلر طبيعي جداً والنتيجة أحسن من المتوقع.",
-  },
-  {
-    name: "هدى",
-    rating: 4,
-    comment:
-      "العناية بالبشرة عندهم ممتازة. استخدمت نضارة البشرة والنتيجة مذهلة.",
-  },
-  {
-    name: "مشاعل",
-    rating: 5,
-    comment:
-      "سويت تنظيف بشره عند أفضل عيادة في الرياض، التنظيف كان عميق وأكيد أنصح بتجربته. ينظفون البشره من قلب وبعدها يحطون ماسك بارد. وشكراً لأستاذه هبه على حسن الاستقبال.",
-  },
-  {
-    name: "خلود",
-    rating: 5,
-    comment:
-      "الدكتوره ريم الغنام شاطره، ثاني مره أجيها يدها خفيفه. الفيلر والبوتكس ترسم الوجه رسم وتحققن في الأماكن الي تحتاج وتعطيك الصراحه. سلمت يدها ع الشغل الجميل.",
-  },
-  {
-    name: "Monia",
-    rating: 5,
-    comment:
-      "تجربتي الأولى مع العيادة كانت سهلة وسريعة. عرفت العيادة من خلال بحثي عن الدكتورة حنان البحيري. وما ندمت أبدًا إني جيتها؛ إنسانة صادقة وأمينة، وتعطيك وقتك بكل أريحية. تعاملها مريح وعلمها عالي جداً.",
-  },
-  {
-    name: "شوق",
-    rating: 5,
-    comment:
-      "تجربتي كانت تشقير حواجب ممتاز وسريعين جداً وأسعارهم مناسبه مع العروض. أشكر الأستاذه وضحى على توضيحها لجميع الخدمات والعروض المتوفره وحسن الاستقبال.",
+      "الاستقبال كان جدا محترم ومتعاون .. عملت ليزر مع ورشا الباكستانيه مره بروفشنال و شغلها حلو وطويلة بال Thank you worsha you are the best",
+    reviewUrl: "https://maps.app.goo.gl/hmBYwQPtnaMdjrjb7",
   },
 ];
 
@@ -173,8 +175,8 @@ export default function TestimonialsCarousel() {
                 return (
                   <div
                     key={t.name}
-                    onClick={() => goTo(i)}
-                    className="absolute w-[260px] sm:w-80 cursor-pointer select-none rounded-2xl border border-primary/10 bg-white/80 p-5 sm:p-7 shadow-lg shadow-black/5 backdrop-blur-xl transition-all duration-500 will-change-transform"
+                    onClick={() => window.open(t.reviewUrl, '_blank', 'noopener,noreferrer')}
+                    className="absolute w-[260px] sm:w-80 cursor-pointer select-none rounded-2xl border border-primary/10 bg-white/80 p-5 sm:p-7 shadow-lg shadow-black/5 backdrop-blur-xl transition-all duration-500 will-change-transform hover:shadow-lg hover:shadow-primary/10 hover:border-primary/30"
                     style={{
                       transform,
                       zIndex,
