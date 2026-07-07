@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft, MessageCircle } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 const container = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.06 },
+    transition: { staggerChildren: 0.18 },
   },
 };
 
@@ -35,16 +35,8 @@ export default function HeroContent() {
       variants={container}
       initial="hidden"
       animate="show"
-      className="flex flex-col items-center lg:items-end text-center lg:text-right"
+      className="flex flex-col items-center text-center"
     >
-      <motion.div
-        variants={fadeUp}
-        className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary border border-primary/10"
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-        اختيارك الأول للعناية بالبشرة والتجميل
-      </motion.div>
-
       <motion.h1
         variants={fadeUp}
         className="mt-6 font-heading leading-[0.95]"
@@ -62,7 +54,7 @@ export default function HeroContent() {
 
       <motion.p
         variants={fadeUp}
-        className="mt-6 text-base sm:text-lg text-text-secondary leading-relaxed max-w-[560px]"
+        className="mt-6 text-base sm:text-lg text-text-secondary leading-relaxed max-w-[560px] text-center"
       >
         عيادات أفضل كلينك تجمع بين أحدث تقنيات الجلدية والتجميل وأمهر الأطباء
         لتقديم تجربة علاجية استثنائية بمعايير عالمية.
@@ -72,31 +64,24 @@ export default function HeroContent() {
         variants={slideUp}
         className="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
       >
-        <a
+        <motion.a
           href="https://wa.me/966581151740?text=مرحباً، أرغب بحجز موعد في عيادة أفضل كلينك"
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex h-14 items-center justify-center gap-2.5 rounded-xl bg-primary px-8 text-base font-bold text-white shadow-lg shadow-primary/20 transition-all duration-300 hover:bg-primary-hover hover:shadow-xl hover:shadow-primary/25 hover:-translate-y-0.5 active:scale-[0.97]"
+          whileHover={{ scale: 1.03, y: -3 }}
+          whileTap={{ scale: 0.97 }}
+          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          className="group inline-flex h-14 items-center justify-center gap-2.5 rounded-xl bg-primary px-8 text-base font-bold text-white shadow-lg shadow-primary/20 transition-colors duration-300 hover:bg-primary-hover hover:shadow-xl hover:shadow-primary/25"
         >
           احجز موعدك
-          <ArrowLeft
-            size={20}
-            className="transition-transform duration-300 group-hover:-translate-x-1"
-          />
-        </a>
-        <a
-          href="tel:+966581151740"
-          className="group inline-flex h-14 items-center justify-center gap-2.5 rounded-xl border border-border bg-white px-8 text-base font-bold text-text-primary shadow-sm transition-all duration-300 hover:border-primary/30 hover:shadow-md hover:-translate-y-0.5 active:scale-[0.97]"
-        >
-          <MessageCircle
-            size={20}
-            className="text-primary transition-transform duration-300 group-hover:scale-110"
-          />
-          اتصل بنا
-        </a>
+          <motion.span
+            animate={{ x: [0, -4, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <ArrowLeft size={20} />
+          </motion.span>
+        </motion.a>
       </motion.div>
-
-
     </motion.div>
   );
 }

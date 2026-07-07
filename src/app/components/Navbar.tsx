@@ -7,8 +7,9 @@ import { Menu, X } from "lucide-react";
 const navLinks = [
   { label: "الخدمات", href: "#services" },
   { label: "الأطباء", href: "#doctors" },
-  { label: "آراء المرضى", href: "#testimonials" },
   { label: "الأسئلة الشائعة", href: "#faq" },
+  { label: "آراء المرضى", href: "#testimonials" },
+  { label: "معرض الصور", href: "#gallery" },
   { label: "الموقع", href: "#location" },
 ];
 
@@ -17,11 +18,45 @@ const waUrl = "https://wa.me/966581151740?text=مرحباً، أرغب بحجز 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const [inCTA, setInCTA] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        }
+      },
+      { threshold: 0.2, rootMargin: "-80px 0px 0px 0px" }
+    );
+
+    const ids = ["services", "doctors", "faq", "testimonials", "gallery", "location"];
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const cta = document.getElementById("final-cta");
+    if (!cta) return;
+    const ctaObserver = new IntersectionObserver(
+      ([entry]) => setInCTA(entry.isIntersecting),
+      { threshold: 0.3 }
+    );
+    ctaObserver.observe(cta);
+    return () => ctaObserver.disconnect();
   }, []);
 
   useEffect(() => {
@@ -49,32 +84,53 @@ export default function Navbar() {
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        <a href="#" className="flex items-center gap-2">
+        <a href="#" className="flex items-center gap-3">
           <span className="text-xl font-bold text-primary font-heading">
             أفضل كلينك
           </span>
         </a>
 
-        <nav className="hidden lg:flex items-center gap-10">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="relative text-base font-medium text-text-secondary hover:text-primary transition-colors duration-300 after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 after:bg-primary after:rounded-full after:transition-all after:duration-300 hover:after:w-full"
-            >
-              {link.label}
-            </a>
-          ))}
+        <nav className="hidden lg:flex items-center gap-6">
+          {navLinks.map((link) => {
+            const isActive = link.href.slice(1) === activeSection;
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-primary/5 hover:shadow-sm ${
+                  isActive
+                    ? "text-primary bg-primary/5"
+                    : "text-text-secondary hover:text-primary"
+                }`}
+              >
+                {link.label}
+                {isActive && (
+                  <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary" />
+                )}
+              </a>
+            );
+          })}
         </nav>
 
-        <a
-          href={waUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex h-11 items-center justify-center rounded-xl bg-primary px-5 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:bg-primary-hover hover:shadow-lg"
-        >
-          احجز موعدك
-        </a>
+        <div className="min-w-[136px] flex justify-end">
+          <AnimatePresence mode="popLayout">
+            {!inCTA && (
+              <motion.a
+                key="booking-btn"
+                href={waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                exit={{ opacity: 0, y: 20, scale: 0.9 }}
+                transition={{ duration: 0.3, ease: "easeIn" }}
+                whileHover={{ scale: 1.04, transition: { type: "spring", stiffness: 400, damping: 20 } }}
+                whileTap={{ scale: 0.96, transition: { type: "spring", stiffness: 400, damping: 20 } }}
+                className="inline-flex h-11 items-center justify-center rounded-xl bg-primary px-5 text-sm font-bold text-white shadow-sm transition-colors duration-200 hover:bg-primary-hover hover:shadow-lg"
+              >
+                احجز موعدك
+              </motion.a>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -96,14 +152,17 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <a
-                href={waUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 flex h-11 items-center justify-center rounded-xl bg-primary text-sm font-bold text-white"
-              >
-                احجز موعدك
-              </a>
+              {!inCTA && (
+                <motion.a
+                  href={waUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileTap={{ scale: 0.97 }}
+                  className="mt-2 flex h-11 items-center justify-center rounded-xl bg-primary text-sm font-bold text-white"
+                >
+                  احجز موعدك
+                </motion.a>
+              )}
             </div>
           </motion.div>
         )}

@@ -1,17 +1,21 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { floatingStats } from "./hero-data";
 import FloatingStat from "./FloatingStat";
 
 export default function HeroImage() {
+  const { scrollYProgress } = useScroll();
+  const imageY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+
   return (
     <div className="relative flex items-center justify-center">
       <motion.div
         initial={{ opacity: 0, scale: 0.92 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.9, ease: "easeOut" }}
+        transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+        style={{ y: imageY }}
         className="relative w-full max-w-[480px] aspect-[4/5]"
       >
         <div className="absolute -inset-4 rounded-[32px] bg-gradient-to-br from-primary/15 via-glow/40 to-secondary/5 blur-2xl" />

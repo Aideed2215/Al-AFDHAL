@@ -9,6 +9,7 @@ export interface Doctor {
   bio: string;
   gradient: string;
   initial: string;
+  image: string;
 }
 
 export const doctors: Doctor[] = [
@@ -23,6 +24,7 @@ export const doctors: Doctor[] = [
     bio: "متخصصة في علاج الأمراض الجلدية والتجميل غير الجراحي، معروفة بصدقها وأمانتها وحرصها على مصلحة المريض.",
     gradient: "from-rose-200/40 via-primary/5 to-amber-200/30",
     initial: "ح",
+    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=750&fit=crop",
   },
   {
     id: 2,
@@ -35,6 +37,7 @@ export const doctors: Doctor[] = [
     bio: "متخصصة في حقن الفيلر والبوتكس ورسم الوجه، تتميز بدقة العمل ونتائج طبيعية بإشراف نخبة من الاستشاريين.",
     gradient: "from-sky-200/40 via-secondary/5 to-teal-200/30",
     initial: "ر",
+    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=750&fit=crop",
   },
   {
     id: 3,
@@ -47,5 +50,6 @@ export const doctors: Doctor[] = [
     bio: "نخبة من أطباء الأسنان المتخصصين في الحشوات التجميلية والتركيبات وزراعة الأسنان وتبييضها بأحدث التقنيات.",
     gradient: "from-emerald-200/40 via-secondary/5 to-lime-200/30",
     initial: "ف",
+    image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=600&h=750&fit=crop",
   },
 ];

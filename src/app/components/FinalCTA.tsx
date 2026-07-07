@@ -1,15 +1,27 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Phone, MessageCircle } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
+
+const waUrl = "https://wa.me/966581151740?text=مرحباً، أرغب بحجز موعد في عيادة أفضل كلينك";
+
+const btnSpring = { type: "spring" as const, stiffness: 400, damping: 25 };
 
 export default function FinalCTA() {
   return (
-    <section className="relative py-20 sm:py-28 overflow-hidden">
+    <section id="final-cta" className="relative py-20 sm:py-28 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary-hover" />
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-secondary/20 rounded-full blur-3xl" />
+        <motion.div
+          animate={{ scale: [1, 1.15, 1] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-0 left-1/4 w-96 h-96 bg-white/20 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="absolute bottom-0 right-1/4 w-80 h-80 bg-secondary/20 rounded-full blur-3xl"
+        />
       </div>
 
       <motion.div
@@ -27,22 +39,42 @@ export default function FinalCTA() {
           علاجية استثنائية.
         </p>
 
-        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="https://wa.me/966581151740?text=مرحباً، أرغب بحجز موعد في عيادة أفضل كلينك"
+        <div className="mt-8 flex justify-center">
+          <motion.a
+            href={waUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-white px-8 text-base font-bold text-primary shadow-sm transition-all duration-200 hover:bg-white/90 hover:shadow-xl active:scale-[0.98]"
+            initial={{ opacity: 0, y: -20, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            whileHover={{ scale: 1.04, boxShadow: "0 20px 60px rgba(0,0,0,0.2)" }}
+            whileTap={{ scale: 0.97 }}
+            transition={btnSpring}
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-white px-8 text-base font-bold text-primary shadow-sm hover:bg-white/90"
           >
             <MessageCircle size={20} />
-            احجز واتساب
-          </a>
+            احجز موعدك عبر الواتساب
+          </motion.a>
+        </div>
+
+        <p className="mt-6 text-base text-white/70 font-medium">
+          أو اتصل الآن
+        </p>
+
+        <div className="mt-4 flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="tel:+966581151740"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border-2 border-white/20 px-8 text-base font-bold text-white transition-all duration-200 hover:border-white/40 hover:bg-white/10 active:scale-[0.98]"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border-2 border-white/20 px-6 text-base font-bold text-white transition-all duration-200 hover:bg-white/10"
           >
-            <Phone size={20} />
-            اتصل الآن
+            <Phone size={18} />
+            ٠٥٨١١٥١٧٤٠
+          </a>
+          <a
+            href="tel:+966544503179"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border-2 border-white/20 px-6 text-base font-bold text-white transition-all duration-200 hover:bg-white/10"
+          >
+            <Phone size={18} />
+            ٠٥٤٤٥٠٣١٧٩
           </a>
         </div>
       </motion.div>

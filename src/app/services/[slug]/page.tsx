@@ -81,7 +81,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         {/* Back link */}
         <div className="mx-auto max-w-5xl px-4 pt-8 sm:px-6 lg:px-8">
           <Link
-            href="/"
+            href="/#services"
             className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline"
           >
             <ArrowLeft size={16} />

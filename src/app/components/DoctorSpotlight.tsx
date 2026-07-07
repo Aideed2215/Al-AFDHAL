@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ArrowLeft, Star, Award, Users, Check } from "lucide-react";
 import { doctors } from "@/data/doctors";
 import SectionHeading from "./SectionHeading";
@@ -13,9 +14,23 @@ const contentVariants = {
   exit: { opacity: 0, y: -20, transition: { duration: 0.3, ease: "easeIn" as const } },
 };
 
+const sceneContainer = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.08, delayChildren: 0.15 },
+  },
+};
+
+const sceneItem = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
+};
+
 export default function DoctorSpotlight() {
   const [active, setActive] = useState(0);
   const doctor = doctors[active];
+  const { scrollYProgress } = useScroll();
+  const imageParallax = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
   return (
     <section id="doctors" className="relative py-20 sm:py-28 overflow-hidden">
@@ -38,26 +53,6 @@ export default function DoctorSpotlight() {
         </ScrollReveal>
 
         <div className="mt-12 lg:mt-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={doctor.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="relative mx-auto w-full max-w-md aspect-[3/4]"
-            >
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-white/60 to-white/10 backdrop-blur-sm border border-white/40 shadow-2xl shadow-black/5" />
-              <div className="absolute inset-4 rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent flex items-center justify-center overflow-hidden">
-                <span className="text-[12rem] sm:text-[16rem] font-bold font-heading text-primary/20 select-none">
-                  {doctor.initial}
-                </span>
-              </div>
-              <div className="absolute -bottom-2 -right-2 w-32 h-32 rounded-full bg-primary/10 blur-3xl" />
-              <div className="absolute -top-2 -left-2 w-24 h-24 rounded-full bg-secondary/10 blur-2xl" />
-            </motion.div>
-          </AnimatePresence>
-
           <div className="text-center lg:text-right">
             <AnimatePresence mode="wait">
               <motion.div
@@ -67,70 +62,110 @@ export default function DoctorSpotlight() {
                 animate="center"
                 exit="exit"
               >
-                <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-4">
-                  <Award size={14} />
-                  {doctor.specialty}
-                </div>
+                <motion.div
+                  variants={sceneContainer}
+                  initial="hidden"
+                  animate="show"
+                >
+                  <motion.div variants={sceneItem}>
+                    <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-4">
+                      <Award size={14} />
+                      {doctor.specialty}
+                    </div>
+                  </motion.div>
 
-                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-text-primary leading-tight">
-                  {doctor.name}
-                </h3>
-
-                <div className="mt-6 flex flex-wrap gap-3 justify-center lg:justify-start">
-                  <div className="inline-flex items-center gap-1.5 rounded-full bg-white/80 border border-border/40 px-3.5 py-1.5 text-sm font-medium text-text-primary shadow-sm">
-                    <Star size={14} className="text-amber-500 fill-amber-500" />
-                    {doctor.rating}
-                  </div>
-                  <div className="inline-flex items-center gap-1.5 rounded-full bg-white/80 border border-border/40 px-3.5 py-1.5 text-sm font-medium text-text-primary shadow-sm">
-                    <Award size={14} className="text-primary" />
-                    {doctor.experience}
-                  </div>
-                  <div className="inline-flex items-center gap-1.5 rounded-full bg-white/80 border border-border/40 px-3.5 py-1.5 text-sm font-medium text-text-primary shadow-sm">
-                    <Users size={14} className="text-secondary" />
-                    {doctor.patients} مريض
-                  </div>
-                </div>
-
-                <div className="mt-8">
-                  <p className="text-base sm:text-lg text-text-secondary leading-relaxed">
-                    {doctor.bio}
-                  </p>
-                </div>
-
-                <div className="mt-6">
-                  <h4 className="text-sm font-bold text-text-primary mb-3">
-                    التخصصات:
-                  </h4>
-                  <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
-                    {doctor.specializations.map((spec) => (
-                      <span
-                        key={spec}
-                        className="inline-flex items-center gap-1.5 rounded-lg bg-white/70 border border-border/30 px-3 py-1.5 text-sm text-text-secondary"
-                      >
-                        <Check size={12} className="text-primary" />
-                        {spec}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mt-8">
-                  <a
-                    href={`https://wa.me/966581151740?text=مرحباً، أرغب بالحجز مع ${encodeURIComponent(doctor.name)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex h-12 items-center gap-2 rounded-xl bg-primary px-6 text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all duration-300 hover:bg-primary-hover hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
+                  <motion.h3
+                    variants={sceneItem}
+                    className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-text-primary leading-tight"
                   >
-                    احجز مع {doctor.name.split(" ").slice(1).join(" ")}
-                    <ArrowLeft
-                      size={16}
-                      className="transition-transform duration-300 group-hover:-translate-x-1"
-                    />
-                  </a>
-                </div>
+                    {doctor.name}
+                  </motion.h3>
+
+                  <motion.div
+                    variants={sceneItem}
+                    className="mt-6 flex flex-wrap gap-3 justify-center lg:justify-start"
+                  >
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-white/80 border border-border/40 px-3.5 py-1.5 text-sm font-medium text-text-primary shadow-sm">
+                      <Star size={14} className="text-amber-500 fill-amber-500" />
+                      {doctor.rating}
+                    </div>
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-white/80 border border-border/40 px-3.5 py-1.5 text-sm font-medium text-text-primary shadow-sm">
+                      <Award size={14} className="text-primary" />
+                      {doctor.experience}
+                    </div>
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-white/80 border border-border/40 px-3.5 py-1.5 text-sm font-medium text-text-primary shadow-sm">
+                      <Users size={14} className="text-secondary" />
+                      {doctor.patients} مريض
+                    </div>
+                  </motion.div>
+
+                  <motion.div variants={sceneItem} className="mt-8">
+                    <p className="text-base sm:text-lg text-text-secondary leading-relaxed">
+                      {doctor.bio}
+                    </p>
+                  </motion.div>
+
+                  <motion.div variants={sceneItem} className="mt-6">
+                    <h4 className="text-sm font-bold text-text-primary mb-3">
+                      التخصصات:
+                    </h4>
+                    <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+                      {doctor.specializations.map((spec) => (
+                        <span
+                          key={spec}
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-white/70 border border-border/30 px-3 py-1.5 text-sm text-text-secondary"
+                        >
+                          <Check size={12} className="text-primary" />
+                          {spec}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
+
+                  <motion.div variants={sceneItem} className="mt-8">
+                    <a
+                      href={`https://wa.me/966581151740?text=مرحباً، أرغب بالحجز مع ${encodeURIComponent(doctor.name)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex h-12 items-center gap-2 rounded-xl bg-primary px-6 text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all duration-300 hover:bg-primary-hover hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"
+                    >
+                      احجز مع {doctor.name.split(" ").slice(1).join(" ")}
+                      <ArrowLeft
+                        size={16}
+                        className="transition-transform duration-300 group-hover:-translate-x-1"
+                      />
+                    </a>
+                  </motion.div>
+                </motion.div>
               </motion.div>
             </AnimatePresence>
           </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={doctor.id}
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.92 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              style={{ y: imageParallax }}
+              className="relative mx-auto w-full max-w-md aspect-[3/4]"
+            >
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-white/60 to-white/10 backdrop-blur-sm border border-white/40 shadow-2xl shadow-black/5" />
+              <div className="absolute inset-4 rounded-2xl overflow-hidden">
+                <Image
+                  src={doctor.image}
+                  alt={doctor.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 400px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+              </div>
+              <div className="absolute -bottom-2 -right-2 w-32 h-32 rounded-full bg-primary/10 blur-3xl" />
+              <div className="absolute -top-2 -left-2 w-24 h-24 rounded-full bg-secondary/10 blur-2xl" />
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         <div className="mt-12 sm:mt-16 flex flex-wrap items-center justify-center gap-3 sm:gap-4">

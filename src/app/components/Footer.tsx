@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Phone, MessageCircle, MapPin, Clock, ArrowLeft } from "lucide-react";
+import { MessageCircle, MapPin, ArrowLeft } from "lucide-react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -122,40 +122,6 @@ export default function Footer() {
             </h4>
             <ul className="mt-5 space-y-4">
               <li>
-                <a
-                  href="tel:+966581151740"
-                  className="group flex items-start gap-3 text-sm text-text-secondary/80 hover:text-primary transition-colors duration-200"
-                >
-                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-glow/60 group-hover:bg-primary/10 transition-colors duration-200">
-                    <Phone size={14} className="text-primary" />
-                  </span>
-                  <span>
-                    <span className="block text-xs text-text-secondary/60">اتصل بنا</span>
-                    <span className="block font-medium text-text-primary group-hover:text-primary transition-colors duration-200">
-                      ٠٥٨١١٥١٧٤٠
-                    </span>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://wa.me/966581151740?text=مرحباً، أرغب بحجز موعد في عيادة أفضل كلينك"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-start gap-3 text-sm text-text-secondary/80 hover:text-primary transition-colors duration-200"
-                >
-                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-glow/60 group-hover:bg-primary/10 transition-colors duration-200">
-                    <MessageCircle size={14} className="text-primary" />
-                  </span>
-                  <span>
-                    <span className="block text-xs text-text-secondary/60">واتساب</span>
-                    <span className="block font-medium text-text-primary group-hover:text-primary transition-colors duration-200">
-                      تواصل عبر واتساب
-                    </span>
-                  </span>
-                </a>
-              </li>
-              <li>
                 <div className="group flex items-start gap-3 text-sm">
                   <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-glow/60">
                     <MapPin size={14} className="text-primary" />
@@ -167,22 +133,6 @@ export default function Footer() {
                     </span>
                     <span className="block text-xs text-text-secondary/70">
                       طريق الملك عبدالله الفرعي
-                    </span>
-                  </span>
-                </div>
-              </li>
-              <li>
-                <div className="group flex items-start gap-3 text-sm">
-                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-glow/60">
-                    <Clock size={14} className="text-primary" />
-                  </span>
-                  <span>
-                    <span className="block text-xs text-text-secondary/60">ساعات العمل</span>
-                    <span className="block font-medium text-text-primary">
-                      سبت - خميس: ٩:٠٠ ص - ١٠:٠٠ م
-                    </span>
-                    <span className="block text-xs text-text-secondary/70">
-                      الجمعة: ٢:٠٠ م - ١٠:٠٠ م
                     </span>
                   </span>
                 </div>
