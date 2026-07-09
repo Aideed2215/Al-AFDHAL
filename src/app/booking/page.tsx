@@ -104,7 +104,7 @@ export default function BookingPage() {
       <div className="relative mx-auto max-w-lg px-4 py-8 sm:px-6 sm:py-12">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm font-bold text-text-secondary hover:text-accent transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-bold text-white hover:text-white/80 transition-colors"
         >
           <ChevronRight size={18} />
           العودة إلى الرئيسية
@@ -127,9 +127,6 @@ export default function BookingPage() {
                   <p className="text-xs text-text-secondary">املأ البيانات وسنتواصل معك لتأكيد الموعد</p>
                 </div>
               </div>
-              <span className="rounded-full bg-accent-soft px-3 py-1 text-[11px] font-bold text-accent">
-                سريع ومجاني
-              </span>
             </div>
           </div>
 
