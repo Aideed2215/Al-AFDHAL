@@ -4,32 +4,124 @@ import Link from "next/link";
 import { services } from "@/data/services";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
+import { site } from "@/data/site";
 import { CheckCircle, ArrowLeft } from "lucide-react";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
 }
 
+const serviceUrl = (slug: string) => `${site.url}/services/${slug}`;
+
+const serviceImage = (image: string) =>
+  image.startsWith("http") ? image : `${site.url}${image}`;
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
   if (!service) return {};
+  const url = serviceUrl(service.slug);
+  const image = serviceImage(service.image);
+
   return {
     title: `${service.title} | عيادات أفضل كلينك`,
     description: service.summary,
-    keywords: service.keywords,
+    keywords: [
+      ...service.keywords,
+      site.name,
+      site.nameEn,
+      "Riyadh medical clinic",
+      "Riyadh cosmetic clinic",
+    ],
+    alternates: {
+      canonical: `/services/${service.slug}`,
+    },
     openGraph: {
+      url,
+      type: "article",
+      locale: "ar_SA",
+      siteName: site.name,
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: service.title,
+        },
+      ],
       title: `${service.title} | أفضل كلينك`,
       description: service.summary,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${service.title} | ${site.name}`,
+      description: service.summary,
+      images: [image],
     },
   };
 }
 
 /** Inline JSON-LD for Article + HowTo schema */
 function ServiceSchema({ service }: { service: typeof services[number] }) {
+  const url = serviceUrl(service.slug);
+  const image = serviceImage(service.image);
+
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
+      {
+        "@type": "MedicalWebPage",
+        "@id": `${url}#webpage`,
+        url,
+        name: service.title,
+        description: service.summary,
+        inLanguage: "ar-SA",
+        isPartOf: { "@id": `${site.url}#website` },
+        about: { "@id": `${url}#procedure` },
+        breadcrumb: { "@id": `${url}#breadcrumb` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: image,
+        },
+        publisher: { "@id": `${site.url}#clinic` },
+      },
+      {
+        "@type": "MedicalProcedure",
+        "@id": `${url}#procedure`,
+        name: service.title,
+        description: service.description,
+        image,
+        provider: { "@id": `${site.url}#clinic` },
+        areaServed: {
+          "@type": "City",
+          name: "Riyadh",
+        },
+        offers: {
+          "@type": "Offer",
+          url,
+          priceCurrency: "SAR",
+          availability: "https://schema.org/InStock",
+          price: service.priceFrom ?? "Contact clinic",
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: site.name,
+            item: site.url,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: service.title,
+            item: url,
+          },
+        ],
+      },
       {
         "@type": "Article",
         headline: service.title,
@@ -178,7 +270,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
           </p>
           <div className="mt-6 flex items-center justify-center gap-4">
             <a
-              href={`https://wa.me/966581151740?text=${encodeURIComponent(`مرحباً، أرغب بالاستفسار عن خدمة ${service.title} في عيادة أفضل كلينك`)}`}
+              href={`${site.whatsappUrl}?text=${encodeURIComponent(`مرحباً، أرغب بالاستفسار عن خدمة ${service.title} في عيادة أفضل كلينك`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-xl bg-primary px-8 py-3 text-sm font-bold text-white shadow-lg shadow-primary/20 transition-all hover:bg-primary-hover"
@@ -186,7 +278,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
               احجز عبر واتساب
             </a>
             <a
-              href="tel:+966581151740"
+              href={`tel:${site.phones[0]}`}
               className="rounded-xl border border-primary/20 bg-white px-8 py-3 text-sm font-bold text-primary transition-all hover:bg-glow/50"
             >
               اتصل بنا

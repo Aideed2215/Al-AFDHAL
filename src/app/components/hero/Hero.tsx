@@ -6,9 +6,9 @@ import Image from "next/image";
 import HeroContent from "./HeroContent";
 
 const slides = [
-  { src: "/images/gallery/hero-1.jpg", alt: "جلسة عناية بالبشرة في أفضل كلينك" },
-  { src: "/images/gallery/hero-2.jpg", alt: "طبيبة تطمئن على مريضة في أفضل كلينك" },
-  { src: "/images/gallery/hero-3.jpg", alt: "حقنة تجميلية في أفضل كلينك" },
+  { src: "/images/gallery/hero-1-1920w.webp", alt: "جلسة عناية بالبشرة في أفضل كلينك" },
+  { src: "/images/gallery/hero-2-1920w.webp", alt: "طبيبة تطمئن على مريضة في أفضل كلينك" },
+  { src: "/images/gallery/hero-3-1920w.webp", alt: "حقنة تجميلية في أفضل كلينك" },
 ];
 
 export default function Hero() {
@@ -24,7 +24,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-background">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-background-dark">
       <motion.div style={{ y: bgY }} className="absolute inset-0">
         <AnimatePresence mode="popLayout">
           <motion.div
@@ -41,7 +41,8 @@ export default function Hero() {
               fill
               className="object-cover"
               sizes="100vw"
-              priority
+              priority={current === 0}
+              loading={current === 0 ? "eager" : "lazy"}
             />
           </motion.div>
         </AnimatePresence>

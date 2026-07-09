@@ -1,5 +1,3 @@
-"use client";
-
 import { CalendarSearch, Stethoscope, Sparkles, HeartHandshake } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import ScrollReveal from "./ScrollReveal";

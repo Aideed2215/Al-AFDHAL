@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import type { GalleryItem } from "@/data/gallery";
+import { fadeUp } from "@/components/motion/presets";
 
 interface Props {
   item: GalleryItem;
@@ -15,10 +16,10 @@ export default function StoryGalleryItem({ item, index, onSelect }: Props) {
 
   return (
     <motion.section
-      initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="show"
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, ease: "easeOut" }}
       className="py-12 sm:py-20"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

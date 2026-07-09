@@ -5,25 +5,16 @@ import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion";
 import { ArrowLeft, Star, Award, Users, Check } from "lucide-react";
 import { doctors } from "@/data/doctors";
+import { site } from "@/data/site";
 import SectionHeading from "./SectionHeading";
 import ScrollReveal from "./ScrollReveal";
-
-const contentVariants = {
-  enter: { opacity: 0, y: 30 },
-  center: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
-  exit: { opacity: 0, y: -20, transition: { duration: 0.3, ease: "easeIn" as const } },
-};
+import { fadeSlide, sceneItem } from "@/components/motion/presets";
 
 const sceneContainer = {
   hidden: {},
   show: {
     transition: { staggerChildren: 0.08, delayChildren: 0.15 },
   },
-};
-
-const sceneItem = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
 
 export default function DoctorSpotlight() {
@@ -63,7 +54,7 @@ export default function DoctorSpotlight() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={doctor.id}
-                variants={contentVariants}
+                variants={fadeSlide}
                 initial="enter"
                 animate="center"
                 exit="exit"
@@ -130,7 +121,7 @@ export default function DoctorSpotlight() {
 
                   <motion.div variants={sceneItem} className="mt-8">
                     <a
-                      href={`https://wa.me/966581151740?text=مرحباً، أرغب بالحجز مع ${encodeURIComponent(doctor.name)}`}
+                      href={`${site.whatsappUrl}?text=مرحباً، أرغب بالحجز مع ${encodeURIComponent(doctor.name)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group inline-flex h-12 items-center gap-2 rounded-xl bg-primary px-6 text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all duration-300 hover:bg-primary-hover hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5"

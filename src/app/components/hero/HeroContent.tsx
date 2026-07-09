@@ -2,30 +2,13 @@
 
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
+import { site } from "@/data/site";
+import { fadeUpBlur as fadeUp, slideUp, springHover, springTap } from "@/components/motion/presets";
 
 const container = {
   hidden: {},
   show: {
     transition: { staggerChildren: 0.18 },
-  },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
-  show: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: [0.25, 0.1, 0, 1] as const },
-  },
-};
-
-const slideUp = {
-  hidden: { opacity: 0, y: 40 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.25, 0.1, 0, 1] as const },
   },
 };
 
@@ -65,12 +48,11 @@ export default function HeroContent() {
         className="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
       >
         <motion.a
-          href="https://wa.me/966581151740?text=مرحباً، أرغب بحجز موعد في عيادة أفضل كلينك"
+          href={`${site.whatsappUrl}?text=مرحباً، أرغب بحجز موعد في عيادة أفضل كلينك`}
           target="_blank"
           rel="noopener noreferrer"
-          whileHover={{ scale: 1.03, y: -3 }}
-          whileTap={{ scale: 0.97 }}
-          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          whileHover={springHover}
+          whileTap={springTap}
           className="group inline-flex h-14 items-center justify-center gap-2.5 rounded-xl bg-primary px-8 text-base font-bold text-white shadow-lg shadow-primary/20 transition-colors duration-300 hover:bg-primary-hover hover:shadow-xl hover:shadow-primary/25"
         >
           احجز موعدك
@@ -81,6 +63,12 @@ export default function HeroContent() {
             <ArrowLeft size={20} />
           </motion.span>
         </motion.a>
+        <a
+          href="#services"
+          className="inline-flex h-14 items-center justify-center gap-2 rounded-xl border-2 border-white/20 px-8 text-base font-bold text-white transition-all duration-200 hover:bg-white/10 hover:border-white/30"
+        >
+          تصفح الخدمات
+        </a>
       </motion.div>
     </motion.div>
   );

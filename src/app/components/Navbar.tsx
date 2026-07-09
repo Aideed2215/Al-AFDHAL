@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import Link from "next/link";
+import { Menu, X, Phone } from "lucide-react";
+import { site } from "@/data/site";
 
 const navLinks = [
   { label: "الخدمات", href: "/#services" },
@@ -13,7 +15,7 @@ const navLinks = [
   { label: "الموقع", href: "/#location" },
 ];
 
-const waUrl = "https://wa.me/966581151740?text=مرحباً، أرغب بحجز موعد في عيادة أفضل كلينك";
+const waUrl = `${site.whatsappUrl}?text=مرحباً، أرغب بحجز موعد في عيادة أفضل كلينك`;
 
 export default function Navbar() {
   const headerRef = useRef<HTMLDivElement>(null);
@@ -89,23 +91,38 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <button
-          className={`lg:hidden p-2.5 rounded-lg transition-colors ${
-            scrolled
-              ? "hover:bg-glow text-text-primary"
-              : "hover:bg-white/10 text-white"
-          }`}
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? "إغلاق القائمة" : "فتح القائمة"}
-        >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-1 lg:hidden">
+          <a
+            href={`tel:${site.phones[0]}`}
+            className={`p-2.5 rounded-lg transition-colors ${
+              scrolled
+                ? "hover:bg-glow text-text-primary"
+                : "hover:bg-white/10 text-white"
+            }`}
+            aria-label="اتصل بنا"
+          >
+            <Phone size={20} />
+          </a>
+          <button
+            className={`p-2.5 rounded-lg transition-colors ${
+              scrolled
+                ? "hover:bg-glow text-text-primary"
+                : "hover:bg-white/10 text-white"
+            }`}
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+            aria-label={mobileOpen ? "إغلاق القائمة" : "فتح القائمة"}
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
 
-        <a href="/" className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <span className={`text-xl font-bold font-heading ${scrolled ? "text-primary" : "text-white"}`}>
             أفضل كلينك
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => {
@@ -161,18 +178,19 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
+            id="mobile-menu"
             className="overflow-hidden bg-white/95 backdrop-blur-lg border-t border-border lg:hidden"
           >
-            <div className="flex flex-col gap-2 px-4 pb-6 pt-2">
+            <nav className="flex flex-col gap-2 px-4 pb-6 pt-2" aria-label="التنقل الرئيسي">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.href}
                   href={link.href}
-                  onClick={(e) => { e.preventDefault(); document.body.style.overflow = ""; setMobileOpen(false); const id = link.href.replace("/#", ""); history.replaceState(null, "", `/#${id}`); setTimeout(() => { window.location.href = `/#${id}`; }, 100); }}
+                  onClick={() => { document.body.style.overflow = ""; setMobileOpen(false); }}
                   className="py-3 px-4 rounded-lg text-text-secondary hover:text-primary hover:bg-glow transition-all"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
               {!inCTA && (
                 <motion.a
@@ -185,7 +203,7 @@ export default function Navbar() {
                   احجز موعدك
                 </motion.a>
               )}
-            </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,41 +1,86 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #9E633F;
-  --primary-hover: #824F30;
-  --primary-light: #D4A088;
-  --secondary: #1A6B5A;
-  --secondary-light: #2A8B78;
-  --background: #F8F5F0;
+  --bg: #FAF8F3;
+  --bg-alt: #F6F1EA;
+  --bg-dark: #161310;
   --surface: #FFFFFF;
-  --border: #E5DDD6;
-  --text-primary: #1A1410;
-  --text-secondary: #8B7D72;
-  --glow: #F0DFD0;
-  --success: #22C55E;
-  --warning: #F59E0B;
-  --error: #EF4444;
+
+  --primary: #8C6A24;
+  --primary-hover: #75581C;
+  --primary-soft: #F3E9CF;
+
+  --secondary: #2F6F73;
+  --secondary-soft: #E5F2F1;
+
+  --coral: #C96F5A;
+  --coral-soft: #FCE7E0;
+
+  --success: #218C5A;
+  --success-soft: #E7F6EE;
+  --warning: #A15C00;
+  --warning-soft: #FFF4D6;
+  --error: #B42318;
+  --error-soft: #FDEAEA;
+
+  --text-heading: #241F1A;
+  --text-body: #3A342E;
+  --text-muted: #6F665C;
+  --text-subtle: #8B8176;
+  --text-inverse: #FFFFFF;
+  --text-inverse-muted: rgba(255, 255, 255, 0.78);
+
+  --border: #DED6C8;
+  --border-soft: #EEE8DE;
+
+  --focus: #2F6F73;
+  --glow: rgba(140, 106, 36, 0.08);
 }
 
 @theme inline {
+  --color-background: var(--bg);
+  --color-background-alt: var(--bg-alt);
+  --color-background-dark: var(--bg-dark);
+  --color-surface: var(--surface);
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
-  --color-primary-light: var(--primary-light);
+  --color-primary-soft: var(--primary-soft);
   --color-secondary: var(--secondary);
-  --color-secondary-light: var(--secondary-light);
-  --color-background: var(--background);
-  --color-surface: var(--surface);
+  --color-secondary-soft: var(--secondary-soft);
+  --color-coral: var(--coral);
+  --color-coral-soft: var(--coral-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-error: var(--error);
+  --color-error-soft: var(--error-soft);
+  --color-heading: var(--text-heading);
+  --color-text: var(--text-body);
+  --color-text-muted: var(--text-muted);
+  --color-text-subtle: var(--text-subtle);
+  --color-text-inverse: var(--text-inverse);
+  --color-text-inverse-muted: var(--text-inverse-muted);
+  --color-secondary-light: #8B8176;
+  --color-accent: var(--primary);
+  --color-accent-hover: var(--primary-hover);
+  --color-accent-soft: var(--primary-soft);
   --color-border: var(--border);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
+  --color-border-soft: var(--border-soft);
+  --color-text-primary: var(--text-heading);
+  --color-text-secondary: var(--text-muted);
+  --color-focus-ring: var(--focus);
   --color-glow: var(--glow);
-  --font-heading: "Tajawal", "Plus Jakarta Sans", sans-serif;
-  --font-body: "Inter", sans-serif;
+  --shadow-card: 0 6px 24px -12px rgba(22, 19, 16, 0.12);
+  --shadow-soft: 0 4px 12px rgba(22, 19, 16, 0.06);
+  --shadow-pop: 0 12px 28px -10px rgba(140, 106, 36, 0.2);
+  --font-heading: var(--font-tajawal), "Tajawal", sans-serif;
+  --font-body: var(--font-tajawal), "Tajawal", sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--text-primary);
+  background: var(--bg);
+  color: var(--text-body);
   font-family: var(--font-body);
 }
 
@@ -50,14 +95,14 @@ body {
   }
 
   ::selection {
-    background: var(--primary);
-    color: white;
+    background: var(--primary-soft);
+    color: var(--primary-hover);
   }
 
   :focus-visible {
-    outline: 2px solid var(--primary);
+    outline: 2px solid var(--focus);
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: 8px;
   }
 
   button:focus-visible:not(:focus-visible) {
@@ -71,8 +116,7 @@ body {
 
 @keyframes ambientShift {
   0%, 100% { background-position: 0% 50%; }
-  33% { background-position: 100% 50%; }
-  66% { background-position: 50% 100%; }
+  50% { background-position: 100% 50%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -84,26 +128,4 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-.flip-card {
-  perspective: 1000px;
-}
-
-.flip-card-inner {
-  transform-style: preserve-3d;
-  transition: transform 0.6s ease;
-}
-
-.flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-.flip-front,
-.flip-back {
-  backface-visibility: hidden;
-}
-
-.flip-back {
-  transform: rotateY(180deg);
 }

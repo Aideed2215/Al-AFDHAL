@@ -12,8 +12,6 @@ export default function ScrollDownIndicator() {
 
   useEffect(() => {
     const check = () => {
-      const scrollY = window.scrollY;
-      // find the last section whose top is at or above the viewport
       let idx = -1;
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const el = document.getElementById(sectionIds[i]);
@@ -22,7 +20,7 @@ export default function ScrollDownIndicator() {
           break;
         }
       }
-      currentRef.current = Math.max(0, idx);
+      currentRef.current = idx;
 
       // hide when last section is at or above viewport center
       const last = document.getElementById("location");
@@ -36,7 +34,7 @@ export default function ScrollDownIndicator() {
   }, []);
 
   const scrollToNext = () => {
-    const nextIdx = currentRef.current + 1;
+    const nextIdx = currentRef.current < 0 ? 0 : currentRef.current + 1;
     if (nextIdx < sectionIds.length) {
       const el = document.getElementById(sectionIds[nextIdx]);
       if (el) {

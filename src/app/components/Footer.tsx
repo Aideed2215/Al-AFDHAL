@@ -1,20 +1,5 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { MessageCircle, MapPin, ArrowLeft } from "lucide-react";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.15 },
-  },
-};
-
-const columnVariants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
-};
+import { MessageCircle, MapPin, ArrowLeft, Phone } from "lucide-react";
+import { site } from "@/data/site";
 
 const quickLinks = [
   { label: "الخدمات", href: "#services" },
@@ -27,7 +12,7 @@ const quickLinks = [
 const socialLinks = [
   {
     label: "Instagram",
-    href: "https://www.instagram.com/afdal_clinic/",
+    href: site.social.instagram,
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
@@ -38,7 +23,7 @@ const socialLinks = [
   },
   {
     label: "TikTok",
-    href: "https://www.tiktok.com/@afdal_clinic",
+    href: site.social.tiktok,
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
@@ -47,7 +32,7 @@ const socialLinks = [
   },
   {
     label: "Snapchat",
-    href: "https://www.snapchat.com/add/afdal_clinic",
+    href: site.social.snapchat,
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M18 8.5A6 6 0 0 0 6 8.5c0 4.5 2.5 6.5 6 8.5 3.5-2 6-4 6-8.5Z"/>
@@ -58,7 +43,7 @@ const socialLinks = [
   },
   {
     label: "WhatsApp",
-    href: "https://wa.me/966581151740?text=مرحباً، أرغب بحجز موعد في عيادة أفضل كلينك",
+    href: `${site.whatsappUrl}?text=مرحباً، أرغب بحجز موعد في عيادة أفضل كلينك`,
     icon: <MessageCircle size={20} />,
   },
 ];
@@ -70,28 +55,22 @@ export default function Footer() {
     <footer className="relative overflow-hidden bg-gradient-to-b from-surface via-glow/30 to-surface border-t border-border/40">
       <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/[0.03] rounded-full blur-3xl pointer-events-none" />
 
-      <motion.div
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-80px" }}
-        variants={containerVariants}
-        className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12"
-      >
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
-          <motion.div variants={columnVariants} className="lg:col-span-4">
+          <div className="lg:col-span-4">
             <h3 className="text-2xl font-extrabold font-heading text-primary tracking-tight">
-              أفضل كلينك
+              {site.name}
             </h3>
             <p className="mt-3 text-sm text-text-secondary/80 leading-relaxed max-w-xs">
-              اختيارك الأول للعناية بالبشرة والتجميل والليزر في الرياض — خبرة تمتد لأكثر من ١٥ عاماً في تقديم رعاية استثنائية.
+              اختيارك الأول للعناية بالبشرة والتجميل والليزر في الرياض — خبرة تمتد لأكثر من {site.stats.yearsExperience} عاماً في تقديم رعاية استثنائية.
             </p>
             <div className="mt-6 flex items-center gap-2 text-xs text-text-secondary/60">
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-success" />
               متاحون للحجز الآن
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div variants={columnVariants} className="lg:col-span-3">
+          <div className="lg:col-span-3">
             <h4 className="text-sm font-extrabold font-heading text-text-primary tracking-wide uppercase">
               تصفح
             </h4>
@@ -114,9 +93,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div variants={columnVariants} className="lg:col-span-3">
+          <div className="lg:col-span-3">
             <h4 className="text-sm font-extrabold font-heading text-text-primary tracking-wide uppercase">
               تواصل
             </h4>
@@ -129,18 +108,18 @@ export default function Footer() {
                   <span>
                     <span className="block text-xs text-text-secondary/60">العنوان</span>
                     <span className="block font-medium text-text-primary">
-                      الرياض - حي الحمراء
+                      {site.address.city} - {site.address.locality}
                     </span>
                     <span className="block text-xs text-text-secondary/70">
-                      طريق الملك عبدالله الفرعي
+                      {site.address.street}
                     </span>
                   </span>
                 </div>
               </li>
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div variants={columnVariants} className="lg:col-span-2">
+          <div className="lg:col-span-2">
             <h4 className="text-sm font-extrabold font-heading text-text-primary tracking-wide uppercase">
               تابعنا
             </h4>
@@ -158,17 +137,33 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        <motion.div
-          variants={columnVariants}
-          className="mt-16 pt-8 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-text-secondary/60"
-        >
-          <p>© {year} عيادات أفضل كلينك. جميع الحقوق محفوظة.</p>
-          <p className="hidden sm:block">عناية استثنائية على أيدي نخبة من الاستشاريين</p>
-        </motion.div>
-      </motion.div>
+        <div className="mt-12 pt-8 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-text-secondary/60">
+          <p>© {year} عيادات {site.name}. جميع الحقوق محفوظة.</p>
+          <div className="flex flex-wrap items-center gap-3">
+            <a href="/privacy" className="hover:text-primary transition-colors">سياسة الخصوصية</a>
+            <span className="hidden sm:inline">·</span>
+            <a href="/terms" className="hover:text-primary transition-colors">الشروط والأحكام</a>
+            <span className="hidden sm:inline">·</span>
+            <a href={`tel:${site.phones[0]}`} className="inline-flex items-center gap-1 hover:text-primary transition-colors">
+              <Phone size={12} />
+              {site.phones[0].replace("+966", "٠")}
+            </a>
+            <span className="hidden sm:inline">·</span>
+            <a
+              href={`${site.whatsappUrl}?text=مرحباً، أرغب بحجز موعد في عيادة أفضل كلينك`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 rounded-lg bg-primary/10 px-3 py-1.5 text-primary font-bold hover:bg-primary/20 transition-colors"
+            >
+              <MessageCircle size={12} />
+              احجز عبر واتساب
+            </a>
+          </div>
+        </div>
+      </div>
     </footer>
   );
 }

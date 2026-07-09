@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import Image from "next/image";
@@ -12,11 +12,21 @@ import StoryGalleryItem from "./StoryGalleryItem";
 export default function StoryGallery() {
   const [selected, setSelected] = useState<number | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<Map<number, HTMLElement>>(new Map());
+  const lastFocusRef = useRef<HTMLElement | null>(null);
 
   const selectedItem = selected
     ? galleryData.find((g) => g.id === selected)
     : null;
+
+  const open = useCallback((id: number) => {
+    lastFocusRef.current = document.activeElement as HTMLElement;
+    setSelected(id);
+  }, []);
+
+  const close = useCallback(() => {
+    setSelected(null);
+    lastFocusRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (selected && modalRef.current) {
@@ -31,12 +41,27 @@ export default function StoryGallery() {
     if (!selected) return;
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setSelected(null);
+        close();
+      }
+      if (e.key === "Tab" && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [selected]);
+  }, [selected, close]);
 
   return (
     <section id="gallery" className="py-20 sm:py-28 bg-white">
@@ -54,7 +79,7 @@ export default function StoryGallery() {
             key={item.id}
             item={item}
             index={index}
-            onSelect={setSelected}
+            onSelect={open}
           />
         ))}
       </div>
@@ -82,7 +107,7 @@ export default function StoryGallery() {
               tabIndex={-1}
             >
               <button
-                onClick={() => setSelected(null)}
+                onClick={close}
                 className="absolute top-3 left-3 z-10 p-2 rounded-full bg-white/90 hover:bg-white shadow-md transition-colors"
                 aria-label="إغلاق"
               >
